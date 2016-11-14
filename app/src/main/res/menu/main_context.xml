@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_Del"
+        android:orderInCategory="100"
+        android:title="@string/del_trip"/>
+    <item android:id="@+id/menu_Edit"
+        android:orderInCategory="200"
+        android:title="@string/edit_trip"/>
+</menu>

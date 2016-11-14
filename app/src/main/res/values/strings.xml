@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Asg2</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <!--string for main-->
+    <string name="add_budget">Add Budget</string>
+    <string name="add_trip">Add</string>
+    <string name="edit_trip">Edit</string>
+    <string name="del_trip">Del</string>
+    <string name="budget_tag">Budget:</string>
+    <!--string for main-->
+
+</resources>
