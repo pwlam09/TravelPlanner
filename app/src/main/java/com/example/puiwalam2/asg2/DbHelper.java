@@ -15,10 +15,10 @@ public class DbHelper extends SQLiteOpenHelper {
 
     private static final String ACTIVITY_SQL_CREATE_ENTRIES = "CREATE TABLE "
             + ActivityEntry.TBL_NAME + "("+ ActivityEntry._ID + " INTEGER PRIMARY KEY,"
-            + ActivityEntry.COL_NAME_ACTIVITY_LOCATION_NAME + TEXT_TYPE + COMMA_SEP
             + ActivityEntry.COL_NAME_ACTIVITY_SDATE + TEXT_TYPE + COMMA_SEP
             + ActivityEntry.COL_NAME_ACTIVITY_EDATE + TEXT_TYPE + COMMA_SEP
             + ActivityEntry.COL_NAME_ACTIVITY_EXPENSE + " FLOAT" + COMMA_SEP
+            + ActivityEntry.COL_NAME_ACTIVITY_LOCATION_NAME + TEXT_TYPE + COMMA_SEP
             + ActivityEntry.COL_NAME_ACTIVITY_ADDRESS + TEXT_TYPE + COMMA_SEP
             + ActivityEntry.COL_NAME_ACTIVITY_IMAGE_PATH + TEXT_TYPE + COMMA_SEP
             + ActivityEntry.COL_NAME_ACTIVITY_ACTIVITY_TYPE + TEXT_TYPE + COMMA_SEP

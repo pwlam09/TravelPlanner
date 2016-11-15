@@ -4,10 +4,10 @@ package com.example.puiwalam2.asg2;
  * Created by Eva Hung on 15/11/2016.
  */
 public class Activity {
-    String location_name;
     String startDate;
     String endDate;
     float expense;
+    String location_name;
     String address;
     String image_path;
     String activity_type;
