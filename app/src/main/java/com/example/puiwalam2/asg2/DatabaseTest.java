@@ -23,8 +23,8 @@ public class DatabaseTest {
 
         ContentValues values2=new ContentValues();
         values2.put(ActivityEntry.COL_NAME_ACTIVITY_LOCATION_NAME, "Park");
-        values2.put(ActivityEntry.COL_NAME_ACTIVITY_SDATE, "10-10-2016 10:00");
-        values2.put(ActivityEntry.COL_NAME_ACTIVITY_EDATE, "10-10-2016 12:00");
+        values2.put(ActivityEntry.COL_NAME_ACTIVITY_SDATE, "10-10-2016 10:00am");
+        values2.put(ActivityEntry.COL_NAME_ACTIVITY_EDATE, "10-10-2016 12:00pm");
         values2.put(ActivityEntry.COL_NAME_ACTIVITY_EXPENSE, 1000);
         values2.put(ActivityEntry.COL_NAME_ACTIVITY_ADDRESS, "Somewhere in Hong Kong");
         values2.put(ActivityEntry.COL_NAME_ACTIVITY_IMAGE_PATH, "./location.jpg");
