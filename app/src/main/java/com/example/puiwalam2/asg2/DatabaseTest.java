@@ -35,7 +35,7 @@ public class DatabaseTest {
 
         ContentValues values3=new ContentValues();
         values3.put(ExpenseEntry.COL_NAME_EXPENSE_NAME, "Lunch");
-        values3.put(ExpenseEntry.COL_NAME_EXPENSE_TAG, "Eating");
+        values3.put(ExpenseEntry.COL_NAME_EXPENSE_TAG, "Meal");
         values3.put(ExpenseEntry.COL_NAME_EXPENSE, 300);
         values3.put(ExpenseEntry.COL_NAME_ACTIVITY_ID, newRowId2);
         long newRowId3;
