@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tag_array">
+        <item>Airline</item>
+        <item>Accommodation</item>
+        <item>Transportation</item>
+        <item>Meal</item>
+        <item>Entertainment</item>
+        <item>Other</item>
+    </string-array>
+</resources>

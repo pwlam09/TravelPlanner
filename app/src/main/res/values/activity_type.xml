@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="activity_array">
+        <item>Airport</item>
+        <item>Transportation</item>
+        <item>Sightseeing</item>
+        <item>Meeting</item>
+        <item>Entertaining</item>
+        <item>Eating</item>
+        <item>Hotel</item>
+        <item>Other</item>
+    </string-array>
+</resources>
