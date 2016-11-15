@@ -4,12 +4,12 @@ package com.example.puiwalam2.asg2;
  * Created by Eva Hung on 15/11/2016.
  */
 public class TravelActivity {
+    int id;
     String startDate;
     String endDate;
     float expense;
     String location_name;
     String address;
-    String image_path;
     String activity_type;
 
     public String getLocation_name() {
@@ -28,13 +28,9 @@ public class TravelActivity {
         this.endDate = endDate;
     }
 
-    public String getImage_path() {
-        return image_path;
-    }
+    public int getId() { return id; }
 
-    public void setImage_path(String image_path) {
-        this.image_path = image_path;
-    }
+    public void setId(int id) { this.id = id; }
 
     public float getExpense() {
         return expense;
