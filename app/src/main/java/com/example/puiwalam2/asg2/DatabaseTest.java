@@ -25,9 +25,9 @@ public class DatabaseTest {
         values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_SDATE, "10-10-2016 10:00am");
         values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_EDATE, "10-10-2016 12:00pm");
         values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_EXPENSE, 1000);
-        values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_LOCATION_NAME, "Park");
-        values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_ADDRESS, "Somewhere in Hong Kong");
-        values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_IMAGE_PATH, "./location.jpg");
+        values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_LOCATION_NAME, "CityU");
+        values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_ADDRESS, "CityU,HongKong");
+        //values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_IMAGE_PATH, "./location.jpg");
         values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_ACTIVITY_TYPE, "SiteSeeing");
         values2.put(TravelActivityEntry.COL_NAME_TRAVEL_ID, newRowId);
         long newRowId2;
@@ -35,7 +35,7 @@ public class DatabaseTest {
 
         ContentValues values3=new ContentValues();
         values3.put(ExpenseEntry.COL_NAME_EXPENSE_NAME, "Lunch");
-        values3.put(ExpenseEntry.COL_NAME_EXPENSE_TAG, "Meal");
+        values3.put(ExpenseEntry.COL_NAME_EXPENSE_TAG, "Eating");
         values3.put(ExpenseEntry.COL_NAME_EXPENSE, 300);
         values3.put(ExpenseEntry.COL_NAME_ACTIVITY_ID, newRowId2);
         long newRowId3;
