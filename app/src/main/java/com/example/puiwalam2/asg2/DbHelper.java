@@ -59,9 +59,9 @@ public class DbHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public TravelActivity getTravelActivity() {
+    public TravelActivity getTravelActivity(int aid) {
         TravelActivity ta = new TravelActivity();
-        String selectQuery = "SELECT  * FROM "+TravelActivityEntry.TBL_NAME;
+        String selectQuery = "SELECT  * FROM "+TravelActivityEntry.TBL_NAME+" WHERE "+ TravelActivityEntry._ID +" = "+String.valueOf(aid);
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
