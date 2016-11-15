@@ -5,7 +5,7 @@ import android.provider.BaseColumns;
 /**
  * Created by Eva Hung on 15/11/2016.
  */
-public class ActivityEntry implements BaseColumns {
+public class TravelActivityEntry implements BaseColumns {
     public static final String TBL_NAME = "activity";
     public static final String COL_NAME_ACTIVITY_SDATE = "startDate";
     public static final String COL_NAME_ACTIVITY_EDATE = "endDate";

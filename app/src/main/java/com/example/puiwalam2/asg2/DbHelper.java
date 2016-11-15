@@ -14,15 +14,15 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String COMMA_SEP = ",";
 
     private static final String ACTIVITY_SQL_CREATE_ENTRIES = "CREATE TABLE "
-            + ActivityEntry.TBL_NAME + "("+ ActivityEntry._ID + " INTEGER PRIMARY KEY,"
-            + ActivityEntry.COL_NAME_ACTIVITY_SDATE + TEXT_TYPE + COMMA_SEP
-            + ActivityEntry.COL_NAME_ACTIVITY_EDATE + TEXT_TYPE + COMMA_SEP
-            + ActivityEntry.COL_NAME_ACTIVITY_EXPENSE + " FLOAT" + COMMA_SEP
-            + ActivityEntry.COL_NAME_ACTIVITY_LOCATION_NAME + TEXT_TYPE + COMMA_SEP
-            + ActivityEntry.COL_NAME_ACTIVITY_ADDRESS + TEXT_TYPE + COMMA_SEP
-            + ActivityEntry.COL_NAME_ACTIVITY_IMAGE_PATH + TEXT_TYPE + COMMA_SEP
-            + ActivityEntry.COL_NAME_ACTIVITY_ACTIVITY_TYPE + TEXT_TYPE + COMMA_SEP
-            + ActivityEntry.COL_NAME_TRAVEL_ID + " INTEGER);";
+            + TravelActivityEntry.TBL_NAME + "("+ TravelActivityEntry._ID + " INTEGER PRIMARY KEY,"
+            + TravelActivityEntry.COL_NAME_ACTIVITY_SDATE + TEXT_TYPE + COMMA_SEP
+            + TravelActivityEntry.COL_NAME_ACTIVITY_EDATE + TEXT_TYPE + COMMA_SEP
+            + TravelActivityEntry.COL_NAME_ACTIVITY_EXPENSE + " FLOAT" + COMMA_SEP
+            + TravelActivityEntry.COL_NAME_ACTIVITY_LOCATION_NAME + TEXT_TYPE + COMMA_SEP
+            + TravelActivityEntry.COL_NAME_ACTIVITY_ADDRESS + TEXT_TYPE + COMMA_SEP
+            + TravelActivityEntry.COL_NAME_ACTIVITY_IMAGE_PATH + TEXT_TYPE + COMMA_SEP
+            + TravelActivityEntry.COL_NAME_ACTIVITY_ACTIVITY_TYPE + TEXT_TYPE + COMMA_SEP
+            + TravelActivityEntry.COL_NAME_TRAVEL_ID + " INTEGER);";
 
     private static final String TRAVEL_SQL_CREATE_ENTRIES = "CREATE TABLE "
             + TravelEntry.TBL_NAME + "(" + TravelEntry._ID + " INTEGER PRIMARY KEY,"
@@ -52,7 +52,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion)
     {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+ActivityEntry.TBL_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+ TravelActivityEntry.TBL_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TravelEntry.TBL_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+ExpenseEntry.TBL_NAME);
 

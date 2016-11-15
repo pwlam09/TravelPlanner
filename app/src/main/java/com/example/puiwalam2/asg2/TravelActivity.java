@@ -3,7 +3,7 @@ package com.example.puiwalam2.asg2;
 /**
  * Created by Eva Hung on 15/11/2016.
  */
-public class Activity {
+public class TravelActivity {
     String startDate;
     String endDate;
     float expense;
