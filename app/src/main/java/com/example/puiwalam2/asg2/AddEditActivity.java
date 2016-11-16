@@ -136,7 +136,7 @@ public class AddEditActivity extends android.app.Activity {
                 deter=time[1].split(" ");
                 start_minute=Integer.parseInt(deter[0]);
                 start_hour=Integer.parseInt(time[0]);
-                if (deter[1].equals("PM")){
+                if (deter[1].equals("PM") || deter[1].equals("pm")){
                     start_hour+=12;
                 }
                 final Calendar tmp = Calendar.getInstance();
@@ -149,7 +149,7 @@ public class AddEditActivity extends android.app.Activity {
                 deter=time[1].split(" ");
                 end_minute=Integer.parseInt(deter[0]);
                 end_hour=Integer.parseInt(time[0]);
-                if (deter[1].equals("PM")){
+                if (deter[1].equals("PM") || deter[1].equals("pm")){
                     end_hour+=12;
                 }
                 tmp.set(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
