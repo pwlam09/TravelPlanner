@@ -4,7 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:baselineAligned="false">
+    android:baselineAligned="false"
+    android:weightSum="10">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/plan_title"
+        android:text="@string/plan_title"
+        android:layout_weight="1"
+        android:gravity="center_vertical|center_horizontal" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -12,39 +21,37 @@
         android:layout_height="wrap_content"
         android:weightSum="10">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="10">
-
             <TextView
                 android:text="@string/budget_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/budget_tag"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:layout_weight="2"/>
 
             <TextView
                 android:text="$0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/budget_value"
-                android:padding="5dp"
-                android:layout_gravity="center_vertical" />
-        </LinearLayout>
+                android:layout_weight="7"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical" />
 
-        <Button
-            android:text="@string/add_budget"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/add_budget"
-            android:layout_weight="3" />
+            <Button
+                android:text="@string/add_budget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/add_budget"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical|center_horizontal" />
+
     </LinearLayout>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/tripList"
-        android:layout_weight="1" />
+        android:layout_weight="8" />
 </LinearLayout>

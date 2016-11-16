@@ -8,6 +8,12 @@ public class Travel {
     String travel_name;
     float budget;
 
+    public Travel(int travelID, String travel_name, float budget) {
+        this.travelID = travelID;
+        this.travel_name = travel_name;
+        this.budget = budget;
+    }
+
     public int getTravelID() {
         return travelID;
     }

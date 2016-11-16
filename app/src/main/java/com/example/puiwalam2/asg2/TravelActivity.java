@@ -12,6 +12,10 @@ public class TravelActivity {
     String address;
     String activity_type;
 
+    public TravelActivity() {
+
+    }
+
     public String getLocation_name() {
         return location_name;
     }
@@ -61,6 +65,16 @@ public class TravelActivity {
     }
 
     public void setActivity_type(String activity_type) {
+        this.activity_type = activity_type;
+    }
+
+    public TravelActivity(int id, String startDate, String endDate, float expense, String location_name, String address, String activity_type) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.expense = expense;
+        this.location_name = location_name;
+        this.address = address;
         this.activity_type = activity_type;
     }
 }

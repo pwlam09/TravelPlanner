@@ -11,6 +11,7 @@
     <string name="edit_trip">Edit</string>
     <string name="del_trip">Del</string>
     <string name="budget_tag">Budget:</string>
+    <string name="plan_title">No Travel Plan</string>
     <!--string for main-->
 
 </resources>
