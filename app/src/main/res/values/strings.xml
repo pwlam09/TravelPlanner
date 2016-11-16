@@ -14,4 +14,9 @@
     <string name="plan_title">No Travel Plan</string>
     <!--string for main-->
 
+    <!--string for AddEditActivity -->
+    <string name="expense_edit">Edit</string>
+    <string name="expense_del">Delete</string>
+    <!--string for AddEditActivity -->
+
 </resources>

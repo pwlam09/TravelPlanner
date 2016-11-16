@@ -64,7 +64,7 @@ public class AddEditActivity extends android.app.Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_add_edit_activity);
 
         tagList=getResources().getStringArray(R.array.tag_array);
         activityList=getResources().getStringArray(R.array.activity_array);
@@ -202,7 +202,7 @@ public class AddEditActivity extends android.app.Activity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.expense_context_menu, menu);
+        inflater.inflate(R.menu.menu_expense_context_menu, menu);
     }
 
     @Override public boolean onContextItemSelected(MenuItem item) {
@@ -577,7 +577,6 @@ public class AddEditActivity extends android.app.Activity {
                 activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_EDATE, ta.getEndDate());
                 activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_EXPENSE, ta.getExpense());
                 activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_LOCATION_NAME, ta.getLocation_name());
-                //activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_ADDRESS, ta.getAddress().replaceAll("\\s+",""));
                 activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_ADDRESS, ta.getAddress());
                 activity_value.put(TravelActivityEntry.COL_NAME_TRAVEL_ID, travel_id);
                 long newRowId;

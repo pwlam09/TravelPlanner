@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10pt">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Add/Edit"
+        android:id="@+id/tv_add_edit_expense"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#053bff"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Name:"
+        android:id="@+id/tv_add_name"
+        android:layout_below="@+id/tv_add_edit_expense"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:height="43dp"
+        android:gravity="center_vertical" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Tag:"
+        android:id="@+id/tv_add_tag"
+        android:layout_below="@+id/tv_add_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center_vertical"
+        android:height="43dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Price:"
+        android:id="@+id/tv_add_price"
+        android:layout_below="@+id/tv_add_tag"
+        android:layout_alignLeft="@+id/tv_add_tag"
+        android:layout_alignStart="@+id/tv_add_tag"
+        android:gravity="center_vertical"
+        android:height="43dp" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_add_name"
+        android:layout_toRightOf="@+id/tv_add_name"
+        android:layout_alignBottom="@+id/tv_add_name"
+        android:layout_below="@+id/tv_add_edit_expense"
+        android:hint="name" />
+
+    <Spinner
+        android:id="@+id/spinner_tag"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:height="43dp"
+        android:spinnerMode="dropdown"
+        android:layout_toRightOf="@+id/tv_add_tag"
+        android:layout_alignBottom="@+id/tv_add_tag"
+        android:layout_below="@+id/et_add_name" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/et_add_price"
+        android:layout_toRightOf="@+id/tv_add_price"
+        android:layout_alignBottom="@+id/tv_add_price"
+        android:layout_below="@+id/spinner_tag"
+        android:hint="Price" />
+
+</RelativeLayout>
