@@ -2,4 +2,16 @@
 <resources>
     <color name="detailField">#EEEEEE</color>
     <color name="detailTag">#CCCCCC</color>
+
+    <!--For expense_item_selector-->
+    <color name="expense_item_default_bg">#00ffffff</color>
+    <color name="expense_item_pressed_bg">#aa76c6ff</color>
+    <color name="expense_item_selected_bg">#aa76c6ff</color>
+    <!--For expense_item_selector-->
+
+    <!--For add_edit_button_selector-->
+    <color name="add_edit_button_default_bg">#c9c9c9</color>
+    <color name="add_edit_button_pressed_bg">#aa86ccff</color>
+    <!--For add_edit_button_selector-->
+
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Pressed state. -->
+    <item android:drawable="@color/add_edit_button_pressed_bg"    android:state_pressed="true" />
+    <!-- Normal state. -->
+    <item android:drawable="@color/add_edit_button_default_bg" />
+
+</selector>

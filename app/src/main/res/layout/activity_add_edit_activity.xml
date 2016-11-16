@@ -156,10 +156,10 @@
                 android:layout_alignLeft="@+id/tv_expense"
                 android:layout_alignStart="@+id/tv_expense"
                 android:layout_marginTop="35dp"
-                android:background="#7595ff"
                 android:layout_below="@+id/lv_expense"
                 android:clickable="true"
-                android:onClick="cancelAction" />
+                android:onClick="cancelAction"
+                android:background="@drawable/add_edit_button_selector" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -169,7 +169,7 @@
                 android:layout_alignTop="@+id/bt_cancel"
                 android:layout_alignRight="@+id/et_address"
                 android:layout_alignEnd="@+id/et_address"
-                android:background="#FF7595FF"
+                android:background="@drawable/add_edit_button_selector"
                 android:layout_below="@+id/lv_expense"
                 android:onClick="addEditActivity"
                 android:clickable="true" />
@@ -179,7 +179,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/lv_expense"
                 android:layout_below="@+id/tv_expense"
-                android:layout_alignEnd="@+id/et_end"
+                android:layout_alignEnd="@+id/bt_end"
                 android:longClickable="false" />
 
             <Button
