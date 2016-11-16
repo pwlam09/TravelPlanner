@@ -4,4 +4,6 @@
     <color name="activity_pressed_bg">#008cef</color>
     <color name="activity_selected_bg">#86d3f6</color>
     <color name="activity_icon_stroke">#86d3f6</color>
+    <color name="expense_related">#bf3752</color>
+    <color name="budget_related">#1db95e</color>
 </resources>

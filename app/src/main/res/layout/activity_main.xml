@@ -13,7 +13,8 @@
         android:id="@+id/plan_title"
         android:text="@string/plan_title"
         android:layout_weight="1"
-        android:gravity="center_vertical|center_horizontal" />
+        android:gravity="center_vertical|center_horizontal"
+        android:textSize="30sp" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -31,7 +32,7 @@
                 android:layout_weight="2"/>
 
             <TextView
-                android:text="$0"
+                android:text="@string/budget_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/budget_value"
@@ -40,10 +41,10 @@
                 android:gravity="center_vertical" />
 
             <Button
-                android:text="@string/add_budget"
+                android:text="@string/edit_budget"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/add_budget"
+                android:id="@+id/edit_budget"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical|center_horizontal" />
 
@@ -54,4 +55,56 @@
         android:layout_height="0dp"
         android:id="@+id/tripList"
         android:layout_weight="8" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/expense_sum_tag"
+            android:layout_gravity="center_vertical|center_horizontal"
+            tools:text="@string/expense_sum_tag"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/expense_sum_tag"
+            android:layout_weight="1"
+            android:textColor="@color/expense_related"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/expense_sum"
+            tools:text="@string/expense_sum"
+            android:gravity="center_vertical"
+            android:text="@string/expense_sum"
+            android:layout_weight="1"
+            android:textColor="@color/expense_related"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/budget_remain_tag"
+            android:layout_gravity="center_vertical|center_horizontal"
+            tools:text="@string/budget_remain_tag"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/budget_remain_tag"
+            android:layout_weight="1"
+            android:textColor="@color/budget_related"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/budget_remain"
+            tools:text="@string/budget_remain"
+            android:gravity="center_vertical"
+            android:text="@string/budget_remain"
+            android:layout_weight="1"
+            android:textColor="@color/budget_related"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+
 </LinearLayout>

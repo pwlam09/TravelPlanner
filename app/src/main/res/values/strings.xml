@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Asg2</string>
+    <string name="app_name">Travel Expense</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
     <!--string for main-->
-    <string name="add_budget">Add Budget</string>
+    <string name="edit_budget">Edit Budget</string>
+    <string name="confirm_edit">OK</string>
+    <string name="budget_value">$0</string>
     <string name="add_trip">Add</string>
     <string name="edit_trip">Edit</string>
     <string name="del_trip">Del</string>
-    <string name="budget_tag">Budget:</string>
+    <string name="budget_tag">Budget</string>
     <string name="plan_title">No Travel Plan</string>
     <!--string for main-->
 
@@ -18,5 +20,12 @@
     <string name="expense_edit">Edit</string>
     <string name="expense_del">Delete</string>
     <!--string for AddEditActivity -->
+
+    <!--string for activity item -->
+    <string name="expense_sum_tag">Expense</string>
+    <string name="expense_sum">$0</string>
+    <string name="budget_remain_tag">Balance</string>
+    <string name="budget_remain">$0</string>
+    <!--string for activity item -->
 
 </resources>

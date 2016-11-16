@@ -33,6 +33,30 @@ public class DatabaseTest {
         long newRowId2;
         newRowId2=db.insert(TravelActivityEntry.TBL_NAME,null, values2);
 
+        ContentValues values4=new ContentValues();
+        values4.put(TravelActivityEntry.COL_NAME_ACTIVITY_SDATE, "10-10-2015 10:00am");
+        values4.put(TravelActivityEntry.COL_NAME_ACTIVITY_EDATE, "10-10-2015 12:00pm");
+        values4.put(TravelActivityEntry.COL_NAME_ACTIVITY_EXPENSE, 1000);
+        values4.put(TravelActivityEntry.COL_NAME_ACTIVITY_LOCATION_NAME, "CityU");
+        values4.put(TravelActivityEntry.COL_NAME_ACTIVITY_ADDRESS, "CityU,HongKong");
+        //values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_IMAGE_PATH, "./location.jpg");
+        values4.put(TravelActivityEntry.COL_NAME_ACTIVITY_ACTIVITY_TYPE, "SiteSeeing");
+        values4.put(TravelActivityEntry.COL_NAME_TRAVEL_ID, newRowId);
+        long newRowId4;
+        newRowId4=db.insert(TravelActivityEntry.TBL_NAME,null, values4);
+
+        ContentValues values5=new ContentValues();
+        values5.put(TravelActivityEntry.COL_NAME_ACTIVITY_SDATE, "10-09-2016 10:00am");
+        values5.put(TravelActivityEntry.COL_NAME_ACTIVITY_EDATE, "10-09-2016 12:00pm");
+        values5.put(TravelActivityEntry.COL_NAME_ACTIVITY_EXPENSE, 1000);
+        values5.put(TravelActivityEntry.COL_NAME_ACTIVITY_LOCATION_NAME, "CityU");
+        values5.put(TravelActivityEntry.COL_NAME_ACTIVITY_ADDRESS, "CityU,HongKong");
+        //values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_IMAGE_PATH, "./location.jpg");
+        values5.put(TravelActivityEntry.COL_NAME_ACTIVITY_ACTIVITY_TYPE, "SiteSeeing");
+        values5.put(TravelActivityEntry.COL_NAME_TRAVEL_ID, newRowId);
+        long newRowId5;
+        newRowId5=db.insert(TravelActivityEntry.TBL_NAME,null, values5);
+
         ContentValues values3=new ContentValues();
         values3.put(ExpenseEntry.COL_NAME_EXPENSE_NAME, "Lunch");
         values3.put(ExpenseEntry.COL_NAME_EXPENSE_TAG, "Meal");
