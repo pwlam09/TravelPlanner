@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * Created by PuiWa on 13/11/2016.
  */
 
-public class ActivityList extends BaseAdapter {
+public class ActivityListAdaptor extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private ArrayList<TravelActivity> activityList;
     private int screenWidth;
@@ -33,7 +33,7 @@ public class ActivityList extends BaseAdapter {
         TextView tvBudget;
     }
 
-    public ActivityList(Activity context, ArrayList<TravelActivity> details) {
+    public ActivityListAdaptor(Activity context, ArrayList<TravelActivity> details) {
         this.layoutInflater = LayoutInflater.from(context);
         this.activityList = details;
         DisplayMetrics displaymetrics = new DisplayMetrics();

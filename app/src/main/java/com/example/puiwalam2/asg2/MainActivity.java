@@ -3,6 +3,7 @@ package com.example.puiwalam2.asg2;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -30,19 +32,24 @@ import static android.provider.BaseColumns._ID;
 
 public class MainActivity extends Activity {
 
-    private ActivityList activityAdapter;
+    private ActivityListAdaptor activityAdapter;
     private ArrayList<Travel> plans;
     private ArrayList<TravelActivity> activities;
     private DbHelper dbHelper;
     private LayoutInflater layoutInflater;
     private View edit_dialog;
 
+    private MainActivity selfRef;
+    private final int ADD_ACTIVITY=0;
+    private final int EDIT_ACTIVITY=1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //this.deleteDatabase("travelData.db"); //delete database
+        selfRef=this;
+        this.deleteDatabase("travelData.db"); //delete database
         DatabaseTest.Test(this);  //generate db test data
         dbHelper=new DbHelper(this);
         plans = getAllPlans();
@@ -79,7 +86,7 @@ public class MainActivity extends Activity {
 
             calculateAndSetExpenseAndBudget();
 
-            activityAdapter = new ActivityList(this, activities);
+            activityAdapter = new ActivityListAdaptor(this, activities);
             activityAdapter.notifyDataSetChanged();
             ListView lv = (ListView) findViewById(R.id.tripList);
             lv.setAdapter(activityAdapter);
@@ -91,7 +98,6 @@ public class MainActivity extends Activity {
                         @Override
                         public void onItemCheckedStateChanged(ActionMode mode, int
                                 position, long id, boolean checked) {
-                            System.out.println("onItemCheckedStateChanged");
                             if (checked) {
                                 selectedItems.add(activityAdapter.getItem(position));
                             } else {
@@ -139,7 +145,12 @@ public class MainActivity extends Activity {
                                     actionMode.finish();
                                     break;
                                 case R.id.menu_Edit:
-                                    //to be added
+                                    Intent i=new Intent(selfRef,AddEditActivity.class);
+                                    TravelActivity a = (TravelActivity) selectedItems.get(0);
+                                    int travelId=a.getId();
+                                    i.putExtra("TravelID", travelId);
+                                    i.putExtra("ACTION_TYPE", EDIT_ACTIVITY);
+                                    startActivity(i);
                                     break;
                                 default:
                                     break;
@@ -153,6 +164,18 @@ public class MainActivity extends Activity {
                         }
                     };
             lv.setMultiChoiceModeListener(mcListener);
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                    TravelActivity aActivity = (TravelActivity)activityAdapter.getItem(position);
+                    int travelId=aActivity.getTravelId();
+                    int activityId=aActivity.getId();
+                    Intent intent = new Intent(selfRef,BrowseDetailActivity.class);
+                    intent.putExtra("TravelID", travelId);
+                    intent.putExtra("ActivityID", activityId);
+                    startActivity(intent);
+                }
+            });
             this.registerForContextMenu(lv);
         }
     }
@@ -198,9 +221,9 @@ public class MainActivity extends Activity {
                 Float expense=Float.parseFloat(c.getString(3));
                 String name=c.getString(4);
                 String address=c.getString(5);
-                String imgPath=c.getString(6);
-                String activityType=c.getString(7);
-                activityList.add(new TravelActivity(id, sDate, eDate, expense, name, address, activityType));
+                String activityType=c.getString(6);
+                int travelId=c.getInt(7);
+                activityList.add(new TravelActivity(id, sDate, eDate, expense, name, address, activityType, travelId));
             }while (c.moveToNext());
         }
         // Sort by start date and time
@@ -237,16 +260,16 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_Del:
-                System.out.println("item id: "+item.getItemId());
-                break;
-            case R.id.menu_Edit:
-                System.out.println("item id: "+item.getItemId());
-                break;
-            default:
-                return super.onContextItemSelected(item);
-        }
+//        switch (item.getItemId()) {
+//            case R.id.menu_Del:
+//                System.out.println("item id: "+item.getItemId());
+//                break;
+//            case R.id.menu_Edit:
+//                System.out.println("item id: "+item.getItemId());
+//                break;
+//            default:
+//                return super.onContextItemSelected(item);
+//        }
         return true;
     }
 
@@ -259,22 +282,26 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-
         int id = item.getItemId();
         switch (id){
             case R.id.menu_Add:
-                //to be added
+                Intent intent=new Intent(selfRef,AddEditActivity.class);
+                SQLiteDatabase db = dbHelper.getReadableDatabase();
+                Cursor c = db.query(TravelActivityEntry.TBL_NAME, null, null, null, null, null, null);
+                int travelId;
+                int activityId;
+                if (c.moveToLast()) {
+                    activityId=c.getInt(0);
+                    travelId=c.getInt(7);
+                } else {
+                    activityId=1;
+                    travelId=1;
+                }
+                c.close();
+                intent.putExtra("ActivityID", activityId);
+                intent.putExtra("TravelID", travelId);
+                intent.putExtra("ACTION_TYPE", ADD_ACTIVITY);
+                startActivity(intent);
                 break;
             default:
                 return super.onOptionsItemSelected(item);

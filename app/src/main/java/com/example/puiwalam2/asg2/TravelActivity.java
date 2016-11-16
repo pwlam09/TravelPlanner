@@ -11,6 +11,7 @@ public class TravelActivity {
     String location_name;
     String address;
     String activity_type;
+    int travelId;
 
     public TravelActivity() {
 
@@ -68,7 +69,7 @@ public class TravelActivity {
         this.activity_type = activity_type;
     }
 
-    public TravelActivity(int id, String startDate, String endDate, float expense, String location_name, String address, String activity_type) {
+    public TravelActivity(int id, String startDate, String endDate, float expense, String location_name, String address, String activity_type, int travelId) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -76,5 +77,10 @@ public class TravelActivity {
         this.location_name = location_name;
         this.address = address;
         this.activity_type = activity_type;
+        this.travelId=travelId;
+    }
+
+    public int getTravelId() {
+        return travelId;
     }
 }
