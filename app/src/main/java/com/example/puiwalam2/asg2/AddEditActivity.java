@@ -152,8 +152,8 @@ public class AddEditActivity extends android.app.Activity {
                 if (deter[1].equals("PM") || deter[1].equals("pm")){
                     end_hour+=12;
                 }
-                tmp.set(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
-                endD=tmp.getTime();
+                tmp.set(Integer.parseInt(date[2])+1, Integer.parseInt(date[1]), Integer.parseInt(date[0]));
+                maxEndD=tmp.getTime();
 
                 EditText et_loaction=(EditText) findViewById(R.id.et_location);
                 EditText et_address=(EditText) findViewById(R.id.et_address);
@@ -374,7 +374,7 @@ public class AddEditActivity extends android.app.Activity {
         showEndDateDialog();
     }
 
-    Date endD;
+    Date maxEndD;
     Date startD;
 
     public void showStartDateDialog(){
@@ -395,8 +395,8 @@ public class AddEditActivity extends android.app.Activity {
                         showTimeDialog();
                     }
                 },year, month, day);
-        if (endD!=null){
-            dpd.getDatePicker().setMaxDate(endD.getTime());
+        if (maxEndD!=null){
+            dpd.getDatePicker().setMaxDate(maxEndD.getTime());
         }
         dpd.show();
     }
@@ -415,7 +415,7 @@ public class AddEditActivity extends android.app.Activity {
                         tmp.set(Calendar.YEAR, year);
                         bt_end.setText(day + "-" + (month + 1) + "-"
                                 + year);
-                        endD=tmp.getTime();
+                        maxEndD=tmp.getTime();
                         showTimeDialog();
                     }
                 },year, month, day);
