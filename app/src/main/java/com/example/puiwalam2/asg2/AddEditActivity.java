@@ -391,6 +391,8 @@ public class AddEditActivity extends android.app.Activity {
 
     Date maxEndD;
     Date startD;
+    String startString="";
+    String endString="";
 
     public void showStartDateDialog(){
         int year = c.get(Calendar.YEAR);
@@ -406,6 +408,7 @@ public class AddEditActivity extends android.app.Activity {
                         tmp.set(Calendar.YEAR, year);
                         bt_start.setText(day + "-" + (month + 1) + "-"
                                 + year);
+                        startString=day + "-" + (month + 1) + "-"+ year;
                         startD=tmp.getTime();
                         showTimeDialog();
                     }
@@ -430,7 +433,9 @@ public class AddEditActivity extends android.app.Activity {
                         tmp.set(Calendar.YEAR, year);
                         bt_end.setText(day + "-" + (month + 1) + "-"
                                 + year);
+                        endString=day + "-" + (month + 1) + "-"+ year;
                         maxEndD=tmp.getTime();
+                        tmp.set(Calendar.DATE, day);
                         showTimeDialog();
                     }
                 },year, month, day);
@@ -460,20 +465,35 @@ public class AddEditActivity extends android.app.Activity {
                         }else
                             time="am";
                         if (set_start==true){
-                            if (hour>end_hour || hour==end_hour && minute > end_minute){
-                                Toast t=Toast.makeText(AddEditActivity.this, "The Start Time need to be smaller than the End Time.", Toast.LENGTH_LONG);
-                                t.show();
-                            }else {
-                                bt_start.setText(bt_start.getText().toString() + " " + hour + ":" + minute + " " + time);
-                                start_hour=hour;
-                                start_minute=minute;
-                                ta.setStartDate(bt_start.getText().toString());
+                            if (startString.equals(endString)) {
+                                if (hour > end_hour || hour == end_hour && minute > end_minute) {
+                                    Toast t = Toast.makeText(AddEditActivity.this, "The Start Time need to be smaller than the End Time.", Toast.LENGTH_LONG);
+                                    t.show();
+                                }else{
+                                    bt_start.setText(bt_start.getText().toString() + " " + hour + ":" + minute + " " + time);
+                                    start_hour = hour;
+                                    start_minute = minute;
+                                    ta.setStartDate(bt_start.getText().toString());
+                                }
+                            }
+                            else {
+                                    bt_start.setText(bt_start.getText().toString() + " " + hour + ":" + minute + " " + time);
+                                    start_hour = hour;
+                                    start_minute = minute;
+                                    ta.setStartDate(bt_start.getText().toString());
                             }
                             //bt_start.setText(bt_start.getText().toString()+" "+hour+":"+minute);
                         }else {
-                            if (hour<start_hour || hour==start_hour && minute < start_minute){
-                                Toast t=Toast.makeText(AddEditActivity.this, "The End Time need to be greater than the Start Time.", Toast.LENGTH_LONG);
-                                t.show();
+                            if (startString.equals(endString)) {
+                                if (hour<start_hour || hour==start_hour && minute < start_minute){
+                                    Toast t=Toast.makeText(AddEditActivity.this, "The End Time need to be greater than the Start Time.", Toast.LENGTH_LONG);
+                                    t.show();
+                                }else{
+                                    bt_end.setText(bt_end.getText().toString() + " " + hour + ":" + minute + " " + time);
+                                    end_hour=hour;
+                                    end_minute=minute;
+                                    ta.setEndDate(bt_start.getText().toString());
+                                }
                             }else {
                                 bt_end.setText(bt_end.getText().toString() + " " + hour + ":" + minute + " " + time);
                                 end_hour=hour;
@@ -517,6 +537,8 @@ public class AddEditActivity extends android.app.Activity {
         EditText et_address= (EditText) findViewById(R.id.et_address);
         ta.setLocation_name(et_location.getText().toString());
         ta.setAddress(et_address.getText().toString());
+        ta.setStartDate(bt_start.getText().toString());
+        ta.setEndDate(bt_end.getText().toString());
 
         if (action_type==EDIT_ACTIVITY){
             if (validate().size()==0) {
@@ -593,7 +615,7 @@ public class AddEditActivity extends android.app.Activity {
                     expense_value.put(ExpenseEntry.COL_NAME_EXPENSE_NAME, data.get(i).getName());
                     expense_value.put(ExpenseEntry.COL_NAME_EXPENSE_TAG, data.get(i).getTag());
                     expense_value.put(ExpenseEntry.COL_NAME_EXPENSE, data.get(i).getExpense());
-                    expense_value.put(ExpenseEntry.COL_NAME_ACTIVITY_ID, activity_id);
+                    expense_value.put(ExpenseEntry.COL_NAME_ACTIVITY_ID, newRowId);
                     long newRowId2;
                     newRowId2 = db.insert(ExpenseEntry.TBL_NAME, null, expense_value);
                 }
