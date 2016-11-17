@@ -86,8 +86,11 @@ public class MainActivity extends Activity {
 
             calculateAndSetExpenseAndBudget();
 
-            activityAdapter = new ActivityListAdaptor(this, activities);
-            activityAdapter.notifyDataSetChanged();
+            //activityAdapter = new ActivityListAdaptor(this, activities);
+            activities=getAllActivities();
+            activityAdapter = new ActivityListAdaptor(this, getAllActivities());
+            //activityAdapter.notifyDataSetChanged();
+            activityAdapter.updateData(getAllActivities());
             ListView lv = (ListView) findViewById(R.id.tripList);
             lv.setAdapter(activityAdapter);
             lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
@@ -141,14 +144,18 @@ public class MainActivity extends Activity {
                                         }
                                         selectedItems = new ArrayList<>(); //reset selected item list after delete
                                     }
-                                    activityAdapter.notifyDataSetChanged();
+                                    //activityAdapter.notifyDataSetChanged();
+                                    activityAdapter.updateData(getAllActivities());
                                     actionMode.finish();
                                     break;
                                 case R.id.menu_Edit:
                                     Intent i=new Intent(selfRef,AddEditActivity.class);
                                     TravelActivity a = (TravelActivity) selectedItems.get(0);
-                                    int travelId=a.getId();
+                                    //int travelId=a.getId();
+                                    int activityId=a.getId();
+                                    int travelId=a.getTravelId();
                                     i.putExtra("TravelID", travelId);
+                                    i.putExtra("ActivityID", activityId);
                                     i.putExtra("ACTION_TYPE", EDIT_ACTIVITY);
                                     startActivity(i);
                                     break;
@@ -254,6 +261,14 @@ public class MainActivity extends Activity {
     }
 
     @Override
+    protected void onResume(){
+        super.onResume();
+        activities=getAllActivities();
+        activityAdapter.updateData(getAllActivities());
+        calculateAndSetExpenseAndBudget();
+    }
+
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
     }
@@ -286,26 +301,30 @@ public class MainActivity extends Activity {
         switch (id){
             case R.id.menu_Add:
                 Intent intent=new Intent(selfRef,AddEditActivity.class);
-                SQLiteDatabase db = dbHelper.getReadableDatabase();
-                Cursor c = db.query(TravelActivityEntry.TBL_NAME, null, null, null, null, null, null);
+                //SQLiteDatabase db = dbHelper.getReadableDatabase();
+                //Cursor c = db.query(TravelActivityEntry.TBL_NAME, null, null, null, null, null, null);
                 int travelId;
-                int activityId;
-                if (c.moveToLast()) {
+                //int activityId;
+                /*if (c.moveToLast()) {
                     activityId=c.getInt(0);
                     travelId=c.getInt(7);
                 } else {
                     activityId=1;
                     travelId=1;
-                }
-                c.close();
-                intent.putExtra("ActivityID", activityId);
+                }*/
+                //As currenly there would be only one plan
+                Travel t = plans.get(0);
+                travelId=t.getTravelID();
+                //intent.putExtra("ActivityID", activityId);
                 intent.putExtra("TravelID", travelId);
                 intent.putExtra("ACTION_TYPE", ADD_ACTIVITY);
                 startActivity(intent);
+
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return true;
     }
+
 }
