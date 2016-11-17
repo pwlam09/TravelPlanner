@@ -47,6 +47,7 @@ public class AddEditActivity extends android.app.Activity {
     private String activity_item;
     private ExpenseListAdapter adapter;
     private ArrayList<Expense> data;
+    ArrayList<Expense> deletedData;
     private ArrayList<String> share_data;
     private ListView lv;
     private EditText et_add_name;
@@ -95,6 +96,7 @@ public class AddEditActivity extends android.app.Activity {
         bt_end=(Button) findViewById(R.id.bt_end);
 
         data = new ArrayList<Expense>();
+        deletedData = new ArrayList<Expense>();
 
         Intent i=getIntent();
         travel_id=i.getExtras().getInt("TravelID");
@@ -237,8 +239,11 @@ public class AddEditActivity extends android.app.Activity {
     }
 
     public void DelExpense(int position) {
+        Expense e=data.get(position);
         data.remove(position);
+        deletedData.add(e);
         adapter.notifyDataSetChanged();
+        resetListViewHeight(lv);
     }
 
     private boolean validExpense(String expense){
@@ -325,6 +330,7 @@ public class AddEditActivity extends android.app.Activity {
                 Expense e = new Expense();
                 e.setName(et_add_name.getText().toString());
                 e.setTag(tag_item);
+                e.setId(0);
                 if (validExpense(et_add_price.getText().toString()) && validName(et_add_name.getText().toString()))
                 {
                     e.setExpense(Float.parseFloat(et_add_price.getText().toString()));
@@ -527,27 +533,11 @@ public class AddEditActivity extends android.app.Activity {
                 activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_EDATE, ta.getEndDate());
                 activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_EXPENSE, ta.getExpense());
                 activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_LOCATION_NAME, ta.getLocation_name());
-                activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_ADDRESS, ta.getAddress().replaceAll("\\s+",""));
+                activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_ADDRESS, ta.getAddress());
                 activity_value.put(TravelActivityEntry.COL_NAME_TRAVEL_ID, travel_id);
                 db.update(TravelActivityEntry.TBL_NAME, activity_value, "_ID="+activity_id,null);
 
                 //update expense
-                //compare to get  no longer exist expense
-                db = dphelper.getReadableDatabase();
-                String[] projection={ExpenseEntry.COL_NAME_ACTIVITY_ID, ExpenseEntry._ID};
-                Cursor c=db.query(ExpenseEntry.TBL_NAME,projection,
-                        null,null,null,null,null);
-                ArrayList<Expense> db_data=new ArrayList<Expense>();
-                if (c.moveToFirst()){
-                    do{
-                        if (c.getInt(0) == activity_id){
-                            Expense e=new Expense();
-                            e.setId(c.getInt(1));
-                            db_data.add(e);
-                        }
-                    }while (c.moveToNext());
-                }
-
                 db = dphelper.getWritableDatabase();
                 for (int i=0;i<data.size();i++) {
                     ContentValues expense_value = new ContentValues();
@@ -555,21 +545,18 @@ public class AddEditActivity extends android.app.Activity {
                     expense_value.put(ExpenseEntry.COL_NAME_EXPENSE_TAG, data.get(i).getTag());
                     expense_value.put(ExpenseEntry.COL_NAME_EXPENSE, data.get(i).getExpense());
                     expense_value.put(ExpenseEntry.COL_NAME_ACTIVITY_ID, activity_id);
-                    if (data.get(i).getId()!=0) {
-                        db.update(ExpenseEntry.TBL_NAME, expense_value, "_ID=" + activity_id, null);
-                        for (int index = 0; index < db_data.size(); index++) {
-                            if (data.get(i).getId() == db_data.get(index).getId())
-                                db_data.remove((Integer)index);
-                        }
+                    if (data.get(i).getId()!=0) {//existing data
+                        db.update(ExpenseEntry.TBL_NAME, expense_value, "_ID=" + data.get(i).getId(), null);
                     }
                     else{
                         long newRowId2;
                         newRowId2 = db.insert(ExpenseEntry.TBL_NAME, null, expense_value);
                     }
                 }
-
-                for (int i=0;i<db_data.size();i++) {
-                    db.delete(ExpenseEntry.TBL_NAME,"_ID=" +db_data.get(i).getId(),null);
+                for (int i=0;i<deletedData.size();i++) {
+                    if (deletedData.get(i).getId()!=0) {//the deleted data not the data inside the database
+                        db.delete(ExpenseEntry.TBL_NAME, "_ID=" + deletedData.get(i).getId(), null);
+                    }
                 }
 
                 Toast t= Toast.makeText(this, "Activity Edited", Toast.LENGTH_LONG);
