@@ -35,29 +35,29 @@ import java.util.Date;
 public class AddEditActivity extends android.app.Activity {
     TravelActivity ta=new TravelActivity();
     //final int travel_id=1;
-    int travel_id;
-    int action_type;
-    final int ADD_ACTIVITY=0;
-    final int EDIT_ACTIVITY=1;
-    int activity_id;
-    int working_position;
-    String[] tagList;
-    String[] activityList;
-    String tag_item;
-    String activity_item;
-    ExpenseListAdapter adapter;
-    ArrayList<Expense> data;
-    ArrayList<String> share_data;
-    ListView lv;
-    EditText et_add_name;
-    EditText et_add_price;
-    Spinner spinner_tag;
-    Spinner spinner_activity;
-    ArrayAdapter<CharSequence> spinner_tag_adapter;
-    ArrayAdapter<CharSequence> spinner_activity_adapter;
+    private int travel_id;
+    private int action_type;
+    private final int ADD_ACTIVITY=0;
+    private final int EDIT_ACTIVITY=1;
+    private int activity_id;
+    private int working_position;
+    private String[] tagList;
+    private String[] activityList;
+    private String tag_item;
+    private String activity_item;
+    private ExpenseListAdapter adapter;
+    private ArrayList<Expense> data;
+    private ArrayList<String> share_data;
+    private ListView lv;
+    private EditText et_add_name;
+    private EditText et_add_price;
+    private Spinner spinner_tag;
+    private Spinner spinner_activity;
+    private ArrayAdapter<CharSequence> spinner_tag_adapter;
+    private ArrayAdapter<CharSequence> spinner_activity_adapter;
 
-    Button bt_start;
-    Button bt_end;
+    private Button bt_start;
+    private Button bt_end;
 
 
 
@@ -91,6 +91,9 @@ public class AddEditActivity extends android.app.Activity {
             }
         });
 
+        bt_start=(Button) findViewById(R.id.bt_start);
+        bt_end=(Button) findViewById(R.id.bt_end);
+
         data = new ArrayList<Expense>();
 
         Intent i=getIntent();
@@ -114,15 +117,18 @@ public class AddEditActivity extends android.app.Activity {
                 if (activity_c.moveToFirst()){
                     do{
                         if (activity_c.getInt(0) == activity_id) {
-                            ta.setId(activity_c.getInt(1));
-                            ta.setActivity_type(activity_c.getString(2));
-                            ta.setStartDate(activity_c.getString(3));
-                            ta.setEndDate(activity_c.getString(4));
-                            ta.setLocation_name(activity_c.getString(5));
-                            ta.setAddress(activity_c.getColumnName(6));
+                            ta.setId(activity_c.getInt(0));
+                            ta.setActivity_type(activity_c.getString(1));
+                            ta.setStartDate(activity_c.getString(2));
+                            ta.setEndDate(activity_c.getString(3));
+                            ta.setLocation_name(activity_c.getString(4));
+                            ta.setAddress(activity_c.getString(5));
                         }
                     }while (activity_c.moveToNext());
                 }
+
+                //Toast t = Toast.makeText(this, ta.getId() + " " + ta.getActivity_type() + " " + ta.getStartDate()+ " " + ta.getEndDate() + " " + ta.getLocation_name() + " " + ta.getAddress(), Toast.LENGTH_LONG);
+                //t.show();
 
                 activity_item = ta.getActivity_type();
                 //translsate start date and end date to date and put the string to the button text
@@ -130,13 +136,14 @@ public class AddEditActivity extends android.app.Activity {
                 bt_end.setText(ta.getEndDate());
                 //translate
                 String[] start = ta.getStartDate().split(" ");
-                String[] date, time, deter;
+                String[] date, time;
+                String deter;
                 date = start[0].split("-");
                 time=start[1].split(":");
-                deter=time[1].split(" ");
-                start_minute=Integer.parseInt(deter[0]);
+                deter=start[2];
+                start_minute=Integer.parseInt(time[1]);
                 start_hour=Integer.parseInt(time[0]);
-                if (deter[1].equals("PM") || deter[1].equals("pm")){
+                if (deter.equals("PM") || deter.equals("pm")){
                     start_hour+=12;
                 }
                 final Calendar tmp = Calendar.getInstance();
@@ -146,10 +153,10 @@ public class AddEditActivity extends android.app.Activity {
                 String[] end = ta.getEndDate().split(" ");
                 date = end[0].split("-");
                 time=end[1].split(":");
-                deter=time[1].split(" ");
-                end_minute=Integer.parseInt(deter[0]);
+                deter=end[2];
+                end_minute=Integer.parseInt(time[1]);
                 end_hour=Integer.parseInt(time[0]);
-                if (deter[1].equals("PM") || deter[1].equals("pm")){
+                if (deter.equals("PM") || deter.equals("pm")){
                     end_hour+=12;
                 }
                 tmp.set(Integer.parseInt(date[2])+1, Integer.parseInt(date[1]), Integer.parseInt(date[0]));
@@ -164,7 +171,7 @@ public class AddEditActivity extends android.app.Activity {
                         ExpenseEntry.COL_NAME_EXPENSE_NAME, ExpenseEntry.COL_NAME_EXPENSE_TAG,
                         ExpenseEntry.COL_NAME_EXPENSE};
 
-                Cursor expense_c=db.query(TravelActivityEntry.TBL_NAME,activity_projection,
+                Cursor expense_c=db.query(ExpenseEntry.TBL_NAME,expense_projection,
                         null,null,null,null,null);
 
                 if (expense_c.moveToFirst()){
@@ -190,8 +197,6 @@ public class AddEditActivity extends android.app.Activity {
         this.registerForContextMenu(lv);
         resetListViewHeight(lv);
 
-        bt_start=(Button) findViewById(R.id.bt_start);
-        bt_end=(Button) findViewById(R.id.bt_end);
     }
 
     public void cancelAction(View v){
@@ -236,7 +241,23 @@ public class AddEditActivity extends android.app.Activity {
         adapter.notifyDataSetChanged();
     }
 
+    private boolean validExpense(String expense){
+        if (expense.equals("")){
+            Toast t= Toast.makeText(getBaseContext(), "Expense should be a non-empty number.", Toast.LENGTH_LONG);
+            t.show();
+            return false;
+        }
+        return true;
+    }
 
+    private boolean validName(String name){
+        if (name.length()>40){
+            Toast t= Toast.makeText(getBaseContext(), "The name need to smaller or equal to 40 length.", Toast.LENGTH_LONG);
+            t.show();
+            return false;
+        }
+        return true;
+    }
 
     public void EditExpense(int position) {
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
@@ -246,13 +267,7 @@ public class AddEditActivity extends android.app.Activity {
                 Expense e = new Expense();
                 e.setName(et_add_name.getText().toString());
                 e.setTag(tag_item);
-                if (et_add_price.getText().toString().equals("")){
-                    Toast t= Toast.makeText(getBaseContext(), "Expense should not be empty.", Toast.LENGTH_LONG);
-                    t.show();
-                }else if (et_add_name.getText().toString().length()>40) {
-                    Toast t= Toast.makeText(getBaseContext(), "The name need to smaller or equal to 40 length.", Toast.LENGTH_LONG);
-                    t.show();
-                }else
+                if (validExpense(et_add_price.getText().toString()) && validName(et_add_name.getText().toString()))
                 {
                     e.setExpense(Float.parseFloat(et_add_price.getText().toString()));
                     data.set(working_position, e);
@@ -310,13 +325,7 @@ public class AddEditActivity extends android.app.Activity {
                 Expense e = new Expense();
                 e.setName(et_add_name.getText().toString());
                 e.setTag(tag_item);
-                if (et_add_price.getText().toString().equals("")){
-                    Toast t= Toast.makeText(getBaseContext(), "Expense should not be empty.", Toast.LENGTH_LONG);
-                    t.show();
-                }else if (et_add_name.getText().toString().length()>40) {
-                    Toast t= Toast.makeText(getBaseContext(), "The name need to smaller or equal to 40 length.", Toast.LENGTH_LONG);
-                    t.show();
-                }else
+                if (validExpense(et_add_price.getText().toString()) && validName(et_add_name.getText().toString()))
                 {
                     e.setExpense(Float.parseFloat(et_add_price.getText().toString()));
                     data.add(e);
@@ -509,6 +518,8 @@ public class AddEditActivity extends android.app.Activity {
                 dphelper = new DbHelper(this);
                 SQLiteDatabase db = dphelper.getWritableDatabase();
 
+                calTotalExpense();
+
                 //update activity
                 ContentValues activity_value = new ContentValues();
                 activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_ACTIVITY_TYPE, ta.getActivity_type());
@@ -560,6 +571,11 @@ public class AddEditActivity extends android.app.Activity {
                 for (int i=0;i<db_data.size();i++) {
                     db.delete(ExpenseEntry.TBL_NAME,"_ID=" +db_data.get(i).getId(),null);
                 }
+
+                Toast t= Toast.makeText(this, "Activity Edited", Toast.LENGTH_LONG);
+                t.show();
+                finish();
+
             }else{
                 Toast t= Toast.makeText(this, "Please ensure all value except the expense are typed in.", Toast.LENGTH_LONG);
                 t.show();
@@ -569,6 +585,8 @@ public class AddEditActivity extends android.app.Activity {
                 DbHelper dphelper;
                 dphelper = new DbHelper(this);
                 SQLiteDatabase db = dphelper.getWritableDatabase();
+
+                calTotalExpense();
 
                 //put activity
                 ContentValues activity_value = new ContentValues();
@@ -593,12 +611,24 @@ public class AddEditActivity extends android.app.Activity {
                     newRowId2 = db.insert(ExpenseEntry.TBL_NAME, null, expense_value);
                 }
 
+                Toast t= Toast.makeText(this, "Activity Added", Toast.LENGTH_LONG);
+                t.show();
+                finish();
+
             }else{
                 Toast t= Toast.makeText(this, "Please ensure all value except the expense are typed in.", Toast.LENGTH_LONG);
                 t.show();
             }
         }
 
+    }
+
+    public void calTotalExpense(){
+        float totalExpense=0;
+        for (int i=0;i<data.size();i++) {
+            totalExpense+=data.get(i).getExpense();
+        }
+        ta.setExpense(totalExpense);
     }
 
 }

@@ -35,6 +35,7 @@ import java.util.ArrayList;
 public class BrowseDetailActivity extends Activity {
     int travelId;
     int activityId;
+    private final int EDIT_ACTIVITY=1;
 
     double lat = 0;
     double lon = 0;
@@ -225,10 +226,11 @@ public class BrowseDetailActivity extends Activity {
         Intent i;
         switch (id){
             case R.id.menu_editActivity:
-//                Intent i=new Intent(BrowseDetailActivity.this,);
-//                i.putExtras("TravelID",);
-//                i.putExtras("ActivityID,");
-//                startActivityForResult(i,1);
+                Intent editActivity=new Intent(BrowseDetailActivity.this,AddEditActivity.class);
+                editActivity.putExtra("TravelID",travelId);
+                editActivity.putExtra("ActivityID",activityId);
+                editActivity.putExtra("ACTION_TYPE",EDIT_ACTIVITY);
+                startActivityForResult(editActivity,1);
                 break;
             default:
                 return super.onOptionsItemSelected(item);

@@ -22,8 +22,8 @@ public class DatabaseTest {
         newRowId=db.insert(TravelEntry.TBL_NAME,null, values);
 
         ContentValues values2=new ContentValues();
-        values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_SDATE, "10-10-2016 10:00am");
-        values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_EDATE, "10-10-2016 12:00pm");
+        values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_SDATE, "10-10-2016 10:00 am");
+        values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_EDATE, "10-10-2016 12:00 pm");
         values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_EXPENSE, 1000);
         values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_LOCATION_NAME, "CityU");
         values2.put(TravelActivityEntry.COL_NAME_ACTIVITY_ADDRESS, "CityU,HongKong");
@@ -34,8 +34,8 @@ public class DatabaseTest {
         newRowId2=db.insert(TravelActivityEntry.TBL_NAME,null, values2);
 
         ContentValues values4=new ContentValues();
-        values4.put(TravelActivityEntry.COL_NAME_ACTIVITY_SDATE, "10-10-2015 10:00am");
-        values4.put(TravelActivityEntry.COL_NAME_ACTIVITY_EDATE, "10-10-2015 12:00pm");
+        values4.put(TravelActivityEntry.COL_NAME_ACTIVITY_SDATE, "10-10-2015 10:00 am");
+        values4.put(TravelActivityEntry.COL_NAME_ACTIVITY_EDATE, "10-10-2015 12:00 pm");
         values4.put(TravelActivityEntry.COL_NAME_ACTIVITY_EXPENSE, 1000);
         values4.put(TravelActivityEntry.COL_NAME_ACTIVITY_LOCATION_NAME, "CityU");
         values4.put(TravelActivityEntry.COL_NAME_ACTIVITY_ADDRESS, "CityU,HongKong");
@@ -46,8 +46,8 @@ public class DatabaseTest {
         newRowId4=db.insert(TravelActivityEntry.TBL_NAME,null, values4);
 
         ContentValues values5=new ContentValues();
-        values5.put(TravelActivityEntry.COL_NAME_ACTIVITY_SDATE, "10-09-2016 10:00am");
-        values5.put(TravelActivityEntry.COL_NAME_ACTIVITY_EDATE, "10-09-2016 12:00pm");
+        values5.put(TravelActivityEntry.COL_NAME_ACTIVITY_SDATE, "10-09-2016 10:00 am");
+        values5.put(TravelActivityEntry.COL_NAME_ACTIVITY_EDATE, "10-09-2016 12:00 pm");
         values5.put(TravelActivityEntry.COL_NAME_ACTIVITY_EXPENSE, 1000);
         values5.put(TravelActivityEntry.COL_NAME_ACTIVITY_LOCATION_NAME, "CityU");
         values5.put(TravelActivityEntry.COL_NAME_ACTIVITY_ADDRESS, "CityU,HongKong");

@@ -108,4 +108,9 @@ public class ActivityListAdaptor extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
+
+    public void updateData(ArrayList<TravelActivity> allActivities){
+        activityList=allActivities;
+        notifyDataSetChanged();
+    }
 }

@@ -74,9 +74,8 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
         android:id="@+id/et_add_price"
+        android:inputType="numberDecimal"
         android:layout_toRightOf="@+id/tv_add_price"
         android:layout_alignBottom="@+id/tv_add_price"
         android:layout_below="@+id/spinner_tag"
