@@ -583,6 +583,7 @@ public class AddEditActivity extends android.app.Activity {
 
                 Toast t= Toast.makeText(this, "Activity Edited", Toast.LENGTH_LONG);
                 t.show();
+                setResult(RESULT_OK, null);
                 finish();
 
             }else{

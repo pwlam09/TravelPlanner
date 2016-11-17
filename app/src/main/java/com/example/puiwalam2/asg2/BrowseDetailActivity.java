@@ -81,7 +81,7 @@ public class BrowseDetailActivity extends Activity {
         endtime.setText(ta.getEndDate());
         address.setText(ta.getAddress());
         type.setText(ta.getActivity_type());
-        address_string = ta.getAddress();
+        address_string = ta.getAddress().replaceAll("\\s","");
         location_string=ta.getLocation_name();
 
         ArrayList<Expense> e=dbHelper.getExpense(activityId);
@@ -304,12 +304,16 @@ public class BrowseDetailActivity extends Activity {
                 cm.getActiveNetworkInfo().isConnectedOrConnecting();
     }
 
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == 1) {
-//            if(resultCode == RESULT_OK){
-//
-//            }
-//        }
-//    }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                Intent i = new Intent(BrowseDetailActivity.this, BrowseDetailActivity.class);
+                i.putExtra("TravelID", travelId);
+                i.putExtra("ActivityID", activityId);
+                startActivity(i);
+                finish();
+            }
+        }
+    }
 }
