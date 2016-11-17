@@ -5,5 +5,6 @@
     <color name="activity_selected_bg">#86d3f6</color>
     <color name="activity_icon_stroke">#86d3f6</color>
     <color name="expense_related">#bf3752</color>
-    <color name="budget_related">#1db95e</color>
+    <color name="normal_budget">#1db95e</color>
+    <color name="over_budget">#bf3752</color>
 </resources>

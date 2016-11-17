@@ -93,7 +93,7 @@
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/budget_remain_tag"
             android:layout_weight="1"
-            android:textColor="@color/budget_related"/>
+            android:textColor="@color/normal_budget"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -103,7 +103,7 @@
             android:gravity="center_vertical"
             android:text="@string/budget_remain"
             android:layout_weight="1"
-            android:textColor="@color/budget_related"
+            android:textColor="@color/normal_budget"
             android:layout_gravity="center_vertical" />
     </LinearLayout>
 

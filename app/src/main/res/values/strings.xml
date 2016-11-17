@@ -8,12 +8,12 @@
     <!--string for main-->
     <string name="edit_budget">Edit Budget</string>
     <string name="confirm_edit">OK</string>
-    <string name="budget_value">$0</string>
+    <string name="budget_value">0</string>
     <string name="add_trip">Add</string>
     <string name="edit_trip">Edit</string>
     <string name="del_trip">Del</string>
     <string name="budget_tag">Budget</string>
-    <string name="plan_title">No Travel Plan</string>
+    <string name="plan_title">Click to Edit Plan Name</string>
     <!--string for main-->
 
     <!--string for AddEditActivity -->
@@ -23,9 +23,9 @@
 
     <!--string for activity item -->
     <string name="expense_sum_tag">Expense</string>
-    <string name="expense_sum">$0</string>
+    <string name="expense_sum">0</string>
     <string name="budget_remain_tag">Balance</string>
-    <string name="budget_remain">$0</string>
+    <string name="budget_remain">0</string>
     <!--string for activity item -->
 
 </resources>
