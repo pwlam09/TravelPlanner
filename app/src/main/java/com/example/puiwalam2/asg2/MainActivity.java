@@ -299,7 +299,7 @@ public class MainActivity extends Activity {
                 try {
                     String a1sDate=activity1.getStartDate();
                     String a2sDate=activity2.getStartDate();
-                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mmaa");
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
                     date1 =  df.parse(a1sDate);
                     date2 =  df.parse(a2sDate);
                 } catch (ParseException pe) {
