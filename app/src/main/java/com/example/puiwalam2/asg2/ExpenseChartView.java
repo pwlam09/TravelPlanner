@@ -53,12 +53,12 @@ public class ExpenseChartView extends View {
             sum += slice.getExpense();
         }
         int[] colors=new int[7];
-        colors[0]= Color.BLUE;
-        colors[1]=Color.GREEN;
-        colors[2]=Color.CYAN;
-        colors[3]=Color.MAGENTA;
-        colors[4]=Color.RED;
-        colors[5]=Color.YELLOW;
+        colors[0]= getResources().getColor(R.color.chartBlue);
+        colors[1]=getResources().getColor(R.color.chartGreen);
+        colors[2]=getResources().getColor(R.color.chartCyan);
+        colors[3]=getResources().getColor(R.color.chartMagenta);
+        colors[4]=getResources().getColor(R.color.chartRed);
+        colors[5]=getResources().getColor(R.color.chartYellow);
         colors[6]=Color.DKGRAY;
         float start=0;
         int rectStart=10;
@@ -71,9 +71,9 @@ public class ExpenseChartView extends View {
             start += angle;
             //canvas.drawRect(570,rectStart,570+50,rectStart+50,p);
             canvas.drawRect(10,rectStart+400,10+50,rectStart+400+50,p);
-            canvas.drawText(slices.get(i).getTag()+" = "+slices.get(i).getExpense(),10+50+20,rectStart+400+50,p);
-            rectStart+=90;
             p.setColor(Color.BLACK);
+            canvas.drawText(slices.get(i).getTag()+" = $"+slices.get(i).getExpense(),10+50+20,rectStart+400+50,p);
+            rectStart+=90;
         }
     }
 

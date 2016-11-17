@@ -2,6 +2,12 @@
 <resources>
     <color name="detailField">#EEEEEE</color>
     <color name="detailTag">#CCCCCC</color>
+    <color name="chartBlue">#A5D2EF</color>
+    <color name="chartGreen">#B0A6F0</color>
+    <color name="chartRed">#F0A6B3</color>
+    <color name="chartYellow">#F0EFA6</color>
+    <color name="chartCyan">#A6F0E9</color>
+    <color name="chartMagenta">#E3A6F0</color>
 
     <!--For expense_item_selector-->
     <color name="expense_item_default_bg">#00ffffff</color>
