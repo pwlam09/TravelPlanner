@@ -228,13 +228,15 @@ public class AddEditActivity extends android.app.Activity {
 
     public void resetListViewHeight(ListView lv){
         int height = 0;
+        View item;
         for (int i = 0; i< adapter.getCount();i++) {
-            View item = adapter.getView(i, null, lv);
+            item = adapter.getView(i, null, lv);
             item.measure(0, 0);
             height = height+ item.getMeasuredHeight();
         }
         ViewGroup.LayoutParams params = lv.getLayoutParams();
-        params.height = height + (lv.getDividerHeight() * (adapter.getCount() - 1));
+        int dividerHeight=lv.getDividerHeight() * (adapter.getCount() - 1);
+        params.height = height +dividerHeight;
         lv.setLayoutParams(params);
     }
 
