@@ -49,6 +49,7 @@ public class BrowseDetailActivity extends Activity {
     int zoom;
     ExpenseChartView expenseChartView;
     String url;
+    int mapType;
 
     DbHelper dbHelper=new DbHelper(this);
 
@@ -120,7 +121,7 @@ public class BrowseDetailActivity extends Activity {
         //get map
         Button zoomin = (Button) findViewById(R.id.detail_zoomin);
         Button zoomout = (Button) findViewById(R.id.detail_zoomout);
-        Button mapPath = (Button) findViewById(R.id.detail_path);
+        final Button mapPath = (Button) findViewById(R.id.detail_path);
         image = (ImageView) findViewById(R.id.imageView);
         if (isOnline() == false) {
             File mediaImage = null;
@@ -133,6 +134,7 @@ public class BrowseDetailActivity extends Activity {
                 Toast.makeText(getApplicationContext(), "Map not found", Toast.LENGTH_LONG).show();
             }
         } else {
+            mapType=1;
             url = "https://maps.googleapis.com/maps/api/staticmap?center=" + address_string + "&zoom=" + zoom + "&size=500x500";
             BitmapWorkerTask task = new BitmapWorkerTask(image, getResources());
             task.execute(url);
@@ -141,7 +143,14 @@ public class BrowseDetailActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     zoom += 1;
-                    url = "https://maps.googleapis.com/maps/api/staticmap?center=" + address_string + "&zoom=" + zoom + "&size=500x500";
+                    if(mapType==1)
+                        url = "https://maps.googleapis.com/maps/api/staticmap?center=" + address_string + "&zoom=" + zoom + "&size=500x500";
+                    else if(mapType==2)
+                        url = "https://maps.googleapis.com/maps/api/staticmap?path=color:0xff0000ff|weight:5|" + String.valueOf(lat) + "," + String.valueOf(lon) +
+                                "|" + address_string + "&size=500x500&zoom=" + zoom;
+                    else if(mapType==3)
+                        url = "https://maps.googleapis.com/maps/api/staticmap?path=color:0xff0000ff|weight:5|" + String.valueOf(lastLat) + "," +
+                                String.valueOf(lastLon) + "|" + address_string + "&size=500x500&zoom=" + zoom;
                     BitmapWorkerTask task = new BitmapWorkerTask(image, getResources());
                     task.execute(url);
                 }
@@ -151,7 +160,14 @@ public class BrowseDetailActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     zoom -= 1;
-                    url = "https://maps.googleapis.com/maps/api/staticmap?center=" + address_string + "&zoom=" + zoom + "&size=500x500";
+                    if(mapType==1)
+                        url = "https://maps.googleapis.com/maps/api/staticmap?center=" + address_string + "&zoom=" + zoom + "&size=500x500";
+                    else if(mapType==2)
+                        url = "https://maps.googleapis.com/maps/api/staticmap?path=color:0xff0000ff|weight:5|" + String.valueOf(lat) + "," + String.valueOf(lon) +
+                                "|" + address_string + "&size=500x500&zoom=" + zoom;
+                    else if(mapType==3)
+                        url = "https://maps.googleapis.com/maps/api/staticmap?path=color:0xff0000ff|weight:5|" + String.valueOf(lastLat) + "," +
+                                String.valueOf(lastLon) + "|" + address_string + "&size=500x500&zoom=" + zoom;
                     BitmapWorkerTask task = new BitmapWorkerTask(image, getResources());
                     task.execute(url);
                 }
@@ -190,22 +206,32 @@ public class BrowseDetailActivity extends Activity {
             mapPath.setOnClickListener((new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(lat!=0&&lon!=0) {
+                if(mapType==2||mapType==3) {
+                    mapType = 1;
+                    url = "https://maps.googleapis.com/maps/api/staticmap?center=" + address_string + "&zoom=" + zoom + "&size=500x500";
+                    BitmapWorkerTask task = new BitmapWorkerTask(image, getResources());
+                    task.execute(url);
+                }
+                else {
+
+                    if (lat != 0 && lon != 0) {
+                        mapType = 2;
                         url = "https://maps.googleapis.com/maps/api/staticmap?path=color:0xff0000ff|weight:5|" + String.valueOf(lat) + "," + String.valueOf(lon) +
-                                "|" + address_string + "&size=500x500";
+                                "|" + address_string + "&size=500x500&zoom=" + zoom;
                         BitmapWorkerTask task = new BitmapWorkerTask(image, getResources());
                         task.execute(url);
-                    }
-                    else{
-                        if(lastLat!=0 && lastLon!=0){
+                    } else {
+                        if (lastLat != 0 && lastLon != 0) {
+                            mapType = 3;
                             url = "https://maps.googleapis.com/maps/api/staticmap?path=color:0xff0000ff|weight:5|" + String.valueOf(lastLat) + "," +
-                                    String.valueOf(lastLon) + "|" + address_string + "&size=500x500";
+                                    String.valueOf(lastLon) + "|" + address_string + "&size=500x500&zoom=" + zoom;
                             BitmapWorkerTask task = new BitmapWorkerTask(image, getResources());
                             task.execute(url);
-                            Toast.makeText(getApplicationContext(),"Last location",Toast.LENGTH_LONG).show();
-                        }else
-                            Toast.makeText(getApplicationContext(),"no location",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Last location", Toast.LENGTH_LONG).show();
+                        } else
+                            Toast.makeText(getApplicationContext(), "no location", Toast.LENGTH_LONG).show();
                     }
+                }
                 }
             }));
             //save image context menu
