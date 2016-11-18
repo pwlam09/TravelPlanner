@@ -307,7 +307,7 @@ public class MainActivity extends Activity {
                 }
 //                System.out.println("date1: "+date1+"date2: "+date2+"date1.compareTo(date2): "+date1.compareTo(date2));    //for testing
                 if (date1!=null && date2!=null) {
-                    return  date1.compareTo(date2);
+                    return  date2.compareTo(date1);
                 } else {
                     return 0;
                 }
