@@ -129,9 +129,6 @@ public class AddEditActivity extends android.app.Activity {
                     }while (activity_c.moveToNext());
                 }
 
-                //Toast t = Toast.makeText(this, ta.getId() + " " + ta.getActivity_type() + " " + ta.getStartDate()+ " " + ta.getEndDate() + " " + ta.getLocation_name() + " " + ta.getAddress(), Toast.LENGTH_LONG);
-                //t.show();
-
                 activity_item = ta.getActivity_type();
                 //translsate start date and end date to date and put the string to the button text
                 bt_start.setText(ta.getStartDate());
@@ -140,6 +137,7 @@ public class AddEditActivity extends android.app.Activity {
                 String[] start = ta.getStartDate().split(" ");
                 String[] date, time;
                 String deter;
+
                 date = start[0].split("-");
                 time=start[1].split(":");
                 deter=start[2];
@@ -149,7 +147,8 @@ public class AddEditActivity extends android.app.Activity {
                     start_hour+=12;
                 }
                 final Calendar tmp = Calendar.getInstance();
-                tmp.set(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
+                startString=Integer.parseInt(date[0]) + "-" + Integer.parseInt(date[1]) + "-" + Integer.parseInt(date[2]);
+                tmp.set(Integer.parseInt(date[2]), Integer.parseInt(date[1])-1, Integer.parseInt(date[0]));
                 startD=tmp.getTime();
 
                 String[] end = ta.getEndDate().split(" ");
@@ -161,7 +160,8 @@ public class AddEditActivity extends android.app.Activity {
                 if (deter.equals("PM") || deter.equals("pm")){
                     end_hour+=12;
                 }
-                tmp.set(Integer.parseInt(date[2])+1, Integer.parseInt(date[1]), Integer.parseInt(date[0]));
+                endString=Integer.parseInt(date[0]) + "-" + Integer.parseInt(date[1]) + "-" + Integer.parseInt(date[2]);
+                tmp.set(Integer.parseInt(date[2]), Integer.parseInt(date[1])-1, Integer.parseInt(date[0]));
                 maxEndD=tmp.getTime();
 
                 EditText et_loaction=(EditText) findViewById(R.id.et_location);
@@ -428,7 +428,7 @@ public class AddEditActivity extends android.app.Activity {
                     @Override
                     public void onDateSet(android.widget.DatePicker datePicker, int year, int month, int day) {
                         Calendar tmp = Calendar.getInstance();
-                        tmp.set(Calendar.DATE, day+1);
+                        tmp.set(Calendar.DATE, day);
                         tmp.set(Calendar.MONTH, month);
                         tmp.set(Calendar.YEAR, year);
                         bt_end.setText(day + "-" + (month + 1) + "-"
@@ -446,6 +446,20 @@ public class AddEditActivity extends android.app.Activity {
 
     int start_hour=-1, start_minute=-1;
     int end_hour=25, end_minute=25;
+
+    private void assignStart(int orginalT, int hour, int minute, String time){
+        bt_start.setText(bt_start.getText().toString() + " " + hour + ":" + minute + " " + time);
+        start_hour = orginalT;
+        start_minute = minute;
+        ta.setStartDate(bt_start.getText().toString());
+    }
+
+    private void assignEnd(int orginalT, int hour, int minute, String time){
+        bt_end.setText(bt_end.getText().toString() + " " + hour + ":" + minute + " " + time);
+        end_hour=orginalT;
+        end_minute=minute;
+        ta.setEndDate(bt_start.getText().toString());
+    }
 
     public void showTimeDialog(){
         int hour = c.get(Calendar.HOUR_OF_DAY);
@@ -465,42 +479,18 @@ public class AddEditActivity extends android.app.Activity {
                         }else
                             time="am";
                         if (set_start==true){
-                            if (startString.equals(endString)) {
-                                if (orginalT > end_hour || orginalT == end_hour && minute > end_minute) {
-                                    Toast t = Toast.makeText(AddEditActivity.this, "The Start Time need to be smaller than the End Time.", Toast.LENGTH_LONG);
-                                    t.show();
-                                }else{
-                                    bt_start.setText(bt_start.getText().toString() + " " + hour + ":" + minute + " " + time);
-                                    start_hour = orginalT;
-                                    start_minute = minute;
-                                    ta.setStartDate(bt_start.getText().toString());
-                                }
+                            if (startString.equals(endString) && (orginalT > end_hour || orginalT == end_hour && minute > end_minute)) {
+                                Toast t = Toast.makeText(AddEditActivity.this, "The Start Time need to be smaller than the End Time.", Toast.LENGTH_LONG);
+                                t.show();
                             }
-                            else {
-                                    bt_start.setText(bt_start.getText().toString() + " " + hour + ":" + minute + " " + time);
-                                    start_hour = orginalT;
-                                    start_minute = minute;
-                                    ta.setStartDate(bt_start.getText().toString());
-                            }
-                            //bt_start.setText(bt_start.getText().toString()+" "+hour+":"+minute);
+                            else
+                                assignStart(orginalT, hour, minute, time);
                         }else {
-                            if (startString.equals(endString)) {
-                                if (orginalT<start_hour || orginalT==start_hour && minute < start_minute){
-                                    Toast t=Toast.makeText(AddEditActivity.this, "The End Time need to be greater than the Start Time.", Toast.LENGTH_LONG);
-                                    t.show();
-                                }else{
-                                    bt_end.setText(bt_end.getText().toString() + " " + hour + ":" + minute + " " + time);
-                                    end_hour=orginalT;
-                                    end_minute=minute;
-                                    ta.setEndDate(bt_start.getText().toString());
-                                }
-                            }else {
-                                bt_end.setText(bt_end.getText().toString() + " " + hour + ":" + minute + " " + time);
-                                end_hour=orginalT;
-                                end_minute=minute;
-                                ta.setEndDate(bt_start.getText().toString());
-                                //bt_end.setText(bt_end.getText().toString()+" "+hour+":"+minute);
-                            }
+                            if (startString.equals(endString) && (orginalT<start_hour || orginalT==start_hour && minute < start_minute)) {
+                                Toast t=Toast.makeText(AddEditActivity.this, "The End Time need to be greater than the Start Time.", Toast.LENGTH_LONG);
+                                t.show();
+                            }else
+                                assignEnd(orginalT, hour, minute, time);
                         }
                     }
                 }, hour, minute, false);
@@ -509,7 +499,7 @@ public class AddEditActivity extends android.app.Activity {
 
     private ArrayList<String> validate(){
         ArrayList<String> invalid=new ArrayList<String>();
-        if (ta.getStartDate() == null || ta.getStartDate().isEmpty()){//or .equals ""?
+        if (ta.getStartDate() == null || ta.getStartDate().isEmpty()){
             invalid.add("start_date");
             bt_start.setTextColor(Color.RED);
             bt_start.setText("Please enter Start Date.");
@@ -518,6 +508,14 @@ public class AddEditActivity extends android.app.Activity {
             invalid.add("end_date");
             bt_end.setTextColor(Color.RED);
             bt_end.setText("Please enter End Date.");
+        }
+        if ((startString != null || !startString.isEmpty()) && (endString != null || !endString.isEmpty())) {// if it is equlas to null, it should be handled by the previous two cases
+            if (((startString.equals(endString) && (end_hour < start_hour || end_hour == start_hour && end_minute < start_minute))) || startD.after(maxEndD)) {
+                invalid.add("start_date");
+                invalid.add("end_date");
+                Toast t = Toast.makeText(this, "Start Date should smaller than or equals to End Date.", Toast.LENGTH_LONG);
+                t.show();
+            }
         }
         if (ta.getLocation_name() == null || ta.getLocation_name().isEmpty()){
             invalid.add("location");
@@ -537,100 +535,75 @@ public class AddEditActivity extends android.app.Activity {
         EditText et_address= (EditText) findViewById(R.id.et_address);
         ta.setLocation_name(et_location.getText().toString());
         ta.setAddress(et_address.getText().toString());
-        ta.setStartDate(bt_start.getText().toString());
-        ta.setEndDate(bt_end.getText().toString());
+        if (!bt_start.getText().toString().equals("Please enter Start Date.") && startD!=null)
+            ta.setStartDate(bt_start.getText().toString());
+        if (!bt_end.getText().toString().equals("Please enter End Date.") && maxEndD!=null)
+            ta.setEndDate(bt_end.getText().toString());
 
-        if (action_type==EDIT_ACTIVITY){
-            if (validate().size()==0) {
-                DbHelper dphelper;
-                dphelper = new DbHelper(this);
-                SQLiteDatabase db = dphelper.getWritableDatabase();
+        if (validate().size()==0) {
+            DbHelper dphelper;
+            dphelper = new DbHelper(this);
+            SQLiteDatabase db = dphelper.getWritableDatabase();
 
-                calTotalExpense();
+            calTotalExpense();
 
-                //update activity
-                ContentValues activity_value = new ContentValues();
-                activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_ACTIVITY_TYPE, ta.getActivity_type());
-                activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_SDATE, ta.getStartDate());
-                activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_EDATE, ta.getEndDate());
-                activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_EXPENSE, ta.getExpense());
-                activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_LOCATION_NAME, ta.getLocation_name());
-                activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_ADDRESS, ta.getAddress());
-                activity_value.put(TravelActivityEntry.COL_NAME_TRAVEL_ID, travel_id);
+            long newRowId=0;
+            //update activity
+            ContentValues activity_value = new ContentValues();
+            activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_ACTIVITY_TYPE, ta.getActivity_type());
+            activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_SDATE, ta.getStartDate());
+            activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_EDATE, ta.getEndDate());
+            activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_EXPENSE, ta.getExpense());
+            activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_LOCATION_NAME, ta.getLocation_name());
+            activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_ADDRESS, ta.getAddress());
+            activity_value.put(TravelActivityEntry.COL_NAME_TRAVEL_ID, travel_id);
+            if (action_type==EDIT_ACTIVITY)
                 db.update(TravelActivityEntry.TBL_NAME, activity_value, "_ID="+activity_id,null);
-
-                //update expense
-                db = dphelper.getWritableDatabase();
-                for (int i=0;i<data.size();i++) {
-                    ContentValues expense_value = new ContentValues();
-                    expense_value.put(ExpenseEntry.COL_NAME_EXPENSE_NAME, data.get(i).getName());
-                    expense_value.put(ExpenseEntry.COL_NAME_EXPENSE_TAG, data.get(i).getTag());
-                    expense_value.put(ExpenseEntry.COL_NAME_EXPENSE, data.get(i).getExpense());
-                    expense_value.put(ExpenseEntry.COL_NAME_ACTIVITY_ID, activity_id);
-                    if (data.get(i).getId()!=0) {//existing data
-                        db.update(ExpenseEntry.TBL_NAME, expense_value, "_ID=" + data.get(i).getId(), null);
-                    }
-                    else{
-                        long newRowId2;
-                        newRowId2 = db.insert(ExpenseEntry.TBL_NAME, null, expense_value);
-                    }
-                }
-                for (int i=0;i<deletedData.size();i++) {
-                    if (deletedData.get(i).getId()!=0) {//the deleted data not the data inside the database
-                        db.delete(ExpenseEntry.TBL_NAME, "_ID=" + deletedData.get(i).getId(), null);
-                    }
-                }
-
-                Toast t= Toast.makeText(this, "Activity Edited", Toast.LENGTH_LONG);
-                t.show();
-                setResult(RESULT_OK, null);
-                finish();
-
-            }else{
-                Toast t= Toast.makeText(this, "Please ensure all value except the expense are typed in.", Toast.LENGTH_LONG);
-                t.show();
-            }
-        }else if (action_type==ADD_ACTIVITY){
-            if (validate().size()==0) {
-                DbHelper dphelper;
-                dphelper = new DbHelper(this);
-                SQLiteDatabase db = dphelper.getWritableDatabase();
-
-                calTotalExpense();
-
-                //put activity
-                ContentValues activity_value = new ContentValues();
-                activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_ACTIVITY_TYPE, ta.getActivity_type());
-                activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_SDATE, ta.getStartDate());
-                activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_EDATE, ta.getEndDate());
-                activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_EXPENSE, ta.getExpense());
-                activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_LOCATION_NAME, ta.getLocation_name());
-                activity_value.put(TravelActivityEntry.COL_NAME_ACTIVITY_ADDRESS, ta.getAddress());
-                activity_value.put(TravelActivityEntry.COL_NAME_TRAVEL_ID, travel_id);
-                long newRowId;
+            else {
                 newRowId = db.insert(TravelActivityEntry.TBL_NAME, null, activity_value);
+            }
 
-                //put expense
-                for (int i=0;i<data.size();i++) {
-                    ContentValues expense_value = new ContentValues();
-                    expense_value.put(ExpenseEntry.COL_NAME_EXPENSE_NAME, data.get(i).getName());
-                    expense_value.put(ExpenseEntry.COL_NAME_EXPENSE_TAG, data.get(i).getTag());
-                    expense_value.put(ExpenseEntry.COL_NAME_EXPENSE, data.get(i).getExpense());
+            //update expense
+            db = dphelper.getWritableDatabase();
+            for (int i=0;i<data.size();i++) {
+                ContentValues expense_value = new ContentValues();
+                expense_value.put(ExpenseEntry.COL_NAME_EXPENSE_NAME, data.get(i).getName());
+                expense_value.put(ExpenseEntry.COL_NAME_EXPENSE_TAG, data.get(i).getTag());
+                expense_value.put(ExpenseEntry.COL_NAME_EXPENSE, data.get(i).getExpense());
+                if (action_type==ADD_ACTIVITY)
                     expense_value.put(ExpenseEntry.COL_NAME_ACTIVITY_ID, newRowId);
+                else
+                    expense_value.put(ExpenseEntry.COL_NAME_ACTIVITY_ID, activity_id);
+                if (data.get(i).getId()!=0) {//existing data
+                    db.update(ExpenseEntry.TBL_NAME, expense_value, "_ID=" + data.get(i).getId(), null);
+                }
+                else{
                     long newRowId2;
                     newRowId2 = db.insert(ExpenseEntry.TBL_NAME, null, expense_value);
                 }
-
-                Toast t= Toast.makeText(this, "Activity Added", Toast.LENGTH_LONG);
-                t.show();
-                finish();
-
-            }else{
-                Toast t= Toast.makeText(this, "Please ensure all value except the expense are typed in.", Toast.LENGTH_LONG);
-                t.show();
             }
-        }
 
+            if (action_type==EDIT_ACTIVITY) {
+                for (int i = 0; i < deletedData.size(); i++) {
+                    if (deletedData.get(i).getId() != 0) {//the deleted data not the data inside the database
+                        db.delete(ExpenseEntry.TBL_NAME, "_ID=" + deletedData.get(i).getId(), null);
+                    }
+                }
+            }
+
+            Toast t;
+            if (action_type==EDIT_ACTIVITY)
+                t= Toast.makeText(this, "Activity Edited", Toast.LENGTH_LONG);
+            else
+                t= Toast.makeText(this, "Activity Added", Toast.LENGTH_LONG);
+            t.show();
+            setResult(RESULT_OK, null);
+            finish();
+
+        }else{
+            Toast t= Toast.makeText(this, "Please ensure all value except the expense are typed in correctly.", Toast.LENGTH_LONG);
+            t.show();
+        }
     }
 
     public void calTotalExpense(){
