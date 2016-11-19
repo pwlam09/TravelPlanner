@@ -75,6 +75,8 @@ public class MainActivity extends Activity {
             cv.put(TravelEntry.COL_NAME_TRAVEL_BUDGET, initial_budget);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             db.insert(TravelEntry.TBL_NAME, null, cv);  //add 1 plan to db
+
+            plans=getAllPlans();    //retrieve the new plan
         }
 
         TextView tvPlan_title=(TextView)findViewById(R.id.plan_title);
